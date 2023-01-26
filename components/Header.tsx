@@ -59,7 +59,8 @@ function Header({}: Props) {
 							alt="ebay logo"
 							src={"/assets/ebay-logo.png"}
 							width={100}
-							height={100}
+                            height={100}
+                            priority={true}
 						/>
 					</Link>
 				</div>
@@ -73,8 +74,22 @@ function Header({}: Props) {
                 </div>
                 <button className="hidden sm:inline bg-blue-600 text-white px-5 md:px-10 py-2 border-2 border-blue-600">Search</button>
                 <Link href={"/create"}><button className="border-2 border-blue-600 px-5 md:px-10 py-2 text-blue-600 hover:bg-blue-600/50 hover:text-white">List Item</button></Link>
-                
-			</section>
+            </section>
+            <hr />
+            <section>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+            </section>
 		</div>
 	);
 }
