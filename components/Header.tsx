@@ -59,37 +59,47 @@ function Header({}: Props) {
 							alt="ebay logo"
 							src={"/assets/ebay-logo.png"}
 							width={100}
-                            height={100}
-                            priority={true}
+							height={100}
+							priority={true}
 						/>
 					</Link>
 				</div>
 				<button className="hidden lg:flex items-center space-x-2 w-20">
 					<p className="text-gray-600 text-sm">Shop by category</p>
 					<ChevronDownIcon className="h-4 flex-shrink-0" />
-                </button>
-                <div className="flex items-center space-x-2 px-2 md:px-5 py-2 border-black border-2 flex-1">
-                    <MagnifyingGlassIcon className="w-5 text-gray-400" />
-                    <input className="flex-1 outline-none" placeholder="Search for anything" type="text" />
-                </div>
-                <button className="hidden sm:inline bg-blue-600 text-white px-5 md:px-10 py-2 border-2 border-blue-600">Search</button>
-                <Link href={"/create"}><button className="border-2 border-blue-600 px-5 md:px-10 py-2 text-blue-600 hover:bg-blue-600/50 hover:text-white">List Item</button></Link>
-            </section>
-            <hr />
-            <section>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
-            </section>
+				</button>
+				<div className="flex items-center space-x-2 px-2 md:px-5 py-2 border-black border-2 flex-1">
+					<MagnifyingGlassIcon className="w-5 text-gray-400" />
+					<input
+						className="flex-1 outline-none"
+						placeholder="Search for anything"
+						type="text"
+					/>
+				</div>
+				<button className="hidden sm:inline bg-blue-600 text-white px-5 md:px-10 py-2 border-2 border-blue-600">
+					Search
+				</button>
+				<Link href={"/create"}>
+					<button className="border-2 border-blue-600 px-5 md:px-10 py-2 text-blue-600 hover:bg-blue-600/50 hover:text-white">
+						List Item
+					</button>
+				</Link>
+			</section>
+			<hr />
+			<section className="flex py-3 space-x-6 text-xs md:text-sm whitespace-nowrap justify-center px-6">
+				<p className="link">Home</p>
+				<p className="link">Electronics</p>
+				<p className="link">Computers</p>
+				<p className="link hidden  sm:inline">Video Games</p>
+				<p className="link hidden sm:inline">Home & Garden</p>
+				<p className="link hidden md:inline">Health & Beauty</p>
+				<p className="link hidden lg:inline">Collectibles and Art</p>
+				<p className="link hidden lg:inline">Book</p>
+				<p className="link hidden lg:inline">Music</p>
+				<p className="link hidden xl:inline">Deals</p>
+				<p className="link hidden xl:inline">Other</p>
+				<p className="link hidden ">More</p>
+			</section>
 		</div>
 	);
 }
