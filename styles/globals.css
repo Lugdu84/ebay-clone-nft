@@ -18,4 +18,8 @@
   .card {
     @apply shadow-md rounded-lg p-4 bg-gray-50 cursor-pointer hover:bg-gray-100
   }
+
+  .formField {
+    @apply bg-white rounded-lg p-2 border-2 border-gray-300 h-10 px-5 text-sm outline-gray-500
+  }
 }

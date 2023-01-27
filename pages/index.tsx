@@ -15,7 +15,6 @@ const Home: NextPage = () => {
   )
   const { data: listings, isLoading: loadingListings } =
     useActiveListings(contract)
-  console.log(listings)
   return (
     <div className="">
       <main className="max-w-6xl mx-auto py-2 px-6">
