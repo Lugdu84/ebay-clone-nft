@@ -19,14 +19,12 @@ const Home: NextPage = () => {
     <div className="">
       <main className="max-w-6xl mx-auto py-2 px-6">
         {loadingListings ? (
-          <p className="text-center animate-pulse text-blue-600">
-            Loading listings...
-          </p>
+          <p className="loading">Loading listings...</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mx-auto">
             {listings?.map((listing) => (
               <div
-                className="flex flex-col card hover:scale-105 transition-all duration-150 ease-out "
+                className="flex flex-col card hover:scale-105 transition-all duration-150 ease-out  hover:bg-gray-100 "
                 key={listing.id}
               >
                 <div className="flex flex-1 flex-col pb-2 items-center">
