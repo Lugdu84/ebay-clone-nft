@@ -6,6 +6,7 @@ import {
 } from '@thirdweb-dev/react'
 import { ListingType } from '@thirdweb-dev/sdk'
 import { BanknotesIcon, ClockIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link'
 
 // eslint-disable-next-line react/function-component-definition
 const Home: NextPage = () => {
@@ -23,9 +24,10 @@ const Home: NextPage = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mx-auto">
             {listings?.map((listing) => (
-              <div
+              <Link
                 className="flex flex-col card hover:scale-105 transition-all duration-150 ease-out  hover:bg-gray-100 "
                 key={listing.id}
+                href={`/listing/${listing.id}`}
               >
                 <div className="flex flex-1 flex-col pb-2 items-center">
                   <MediaRenderer className="w-44" src={listing.asset.image} />
@@ -63,7 +65,7 @@ const Home: NextPage = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

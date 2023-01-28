@@ -18,7 +18,7 @@ function Header({}: Props) {
   const disconnect = useDisconnect()
   const address = useAddress()
   return (
-    <div className="max-w-6xl mx-auto p-2">
+    <div className="max-full mx-auto p-2">
       <nav className="flex justify-between">
         <div className="flex items-center space-x-2 text-sm">
           {address ? (
@@ -102,7 +102,9 @@ function Header({}: Props) {
       </section>
       <hr />
       <section className="flex py-3 space-x-6 text-xs md:text-sm whitespace-nowrap justify-center px-6">
-        <p className="link">Home</p>
+        <Link className="link" href="/">
+          Home
+        </Link>
         <p className="link">Electronics</p>
         <p className="link">Computers</p>
         <p className="link hidden  sm:inline">Video Games</p>

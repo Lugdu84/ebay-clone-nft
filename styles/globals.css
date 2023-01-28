@@ -12,7 +12,7 @@
   }
 
   .link {
-    @apply hover:text-blue-500 hover:underline cursor-pointer text-gray-600
+    @apply hover:text-blue-600 hover:underline cursor-pointer text-gray-600
   }
 
   .card {
@@ -25,5 +25,9 @@
 
   .loading {
     @apply text-center animate-pulse text-blue-600
+  }
+
+  .buttonFull {
+    @apply font-bold text-white rounded-full w-44 py-4 px-10
   }
 }

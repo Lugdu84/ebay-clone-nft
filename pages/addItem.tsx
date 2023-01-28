@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-function addItem() {
+function AddItem() {
   const router = useRouter()
   const address = useAddress()
   const { contract } = useContract(
@@ -159,4 +159,4 @@ function addItem() {
   )
 }
 
-export default addItem
+export default AddItem
