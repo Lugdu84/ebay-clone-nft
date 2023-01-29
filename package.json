@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.14",
+    "@thirdweb-dev/auth": "^3.0.0",
     "@thirdweb-dev/react": "^3.6.11",
     "@thirdweb-dev/sdk": "^3.6.11",
     "ethers": "^5.7.2",
