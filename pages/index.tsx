@@ -7,6 +7,8 @@ import {
 import { ListingType } from '@thirdweb-dev/sdk'
 import { BanknotesIcon, ClockIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // eslint-disable-next-line react/function-component-definition
 const Home: NextPage = () => {
@@ -70,6 +72,7 @@ const Home: NextPage = () => {
           </div>
         )}
       </main>
+      <ToastContainer />
     </div>
   )
 }

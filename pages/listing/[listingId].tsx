@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
@@ -11,14 +12,16 @@ import {
   useMakeOffer,
   useBuyNow,
   useAddress,
+  useAcceptDirectListingOffer,
 } from '@thirdweb-dev/react'
 import { UserCircleIcon } from '@heroicons/react/20/solid'
-import { ListingType } from '@thirdweb-dev/sdk'
+import { ListingType, NATIVE_TOKENS } from '@thirdweb-dev/sdk'
 import Countdown from 'react-countdown'
-import { ToastContainer, toast, TypeOptions } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import { ethers } from 'ethers'
 import network from '../../utils/network'
 import 'react-toastify/dist/ReactToastify.css'
+import notify from '../../utils/toast'
 
 function ListingPage() {
   const router = useRouter()
@@ -37,6 +40,7 @@ function ListingPage() {
     symbol: string
   }>()
   const [bidAmount, setBidAmount] = useState<string>()
+  const address = useAddress()
   const [, switchNetwork] = useNetwork()
   const networkMismatch = useNetworkMismatch()
   const { mutate: buyNow, isLoading: isLoadingByNow } = useBuyNow(contract)
@@ -44,8 +48,7 @@ function ListingPage() {
     useMakeOffer(contract)
   const { data: offers } = useOffers(contract, listingId)
   const { mutate: makeBid, isLoading: isLoadingMakeBid } = useMakeBid(contract)
-
-  console.log('offers', offers)
+  const { mutate: acceptOffer } = useAcceptDirectListingOffer(contract)
 
   useEffect(() => {
     if (!listingId || !contract || !listing) return
@@ -89,21 +92,19 @@ function ListingPage() {
         type: listing.type,
       },
       {
-        onSuccess(data, variables, context) {
-          console.log('SUCCESS', data, variables, context)
+        onSuccess() {
+          router.push('/')
           notify('NFT bought successfully', 'success')
-          router.replace('/')
         },
-        onError(error, variables, context) {
+        onError() {
           notify('Error buying NFT', 'error')
-          console.log('ERROR', error, variables, context)
         },
       }
     )
   }
 
-  const notify = (message: string, type: TypeOptions) =>
-    toast(message, { type, position: 'bottom-right', autoClose: 3000 })
+  // const notify = (message: string, type: TypeOptions) =>
+  //   toast(message, { type, position: 'top-center', autoClose: 3000 })
 
   const createBidOrOffer = async () => {
     try {
@@ -130,15 +131,13 @@ function ListingPage() {
             pricePerToken: bidAmount,
           },
           {
-            onSuccess(data, variables, context) {
-              console.log('SUCCESS', data, variables, context)
+            onSuccess() {
               notify('Offer made successfully', 'success')
-              router.replace('/')
               setBidAmount('')
+              router.push('/')
             },
-            onError(error, variables, context) {
+            onError() {
               notify('Offer could not be made', 'error')
-              console.log('ERROR', error, variables, context)
             },
           }
         )
@@ -151,21 +150,19 @@ function ListingPage() {
             bid: bidAmount,
           },
           {
-            onSuccess(data, variables, context) {
-              console.log('SUCCESS', data, variables, context)
+            onSuccess() {
               notify('Bid made successfully', 'success')
               setBidAmount('')
               router.replace('/')
             },
-            onError(error, variables, context) {
-              console.log('ERROR', error, variables, context)
+            onError() {
               notify('Bid could not be made', 'error')
             },
           }
         )
       }
     } catch (error) {
-      console.log(error)
+      notify('Error making bid', 'error')
     }
   }
 
@@ -218,6 +215,58 @@ function ListingPage() {
             Buy now
           </button>
         </div>
+        {listing.type === ListingType.Direct && offers && (
+          <div className="grid grid-cols-2 gap-y-2">
+            <p className="font-bold">Offers:</p>
+            <p className="font-bold">{offers.length > 0 ? offers.length : 0}</p>
+            {offers.map((offer) => (
+              <>
+                <p className="flex items-center ml-5 text-sm italic">
+                  <UserCircleIcon className="h-3 mr-2" />
+                  {offer.offeror.slice(0, 5)}...{offer.offeror.slice(-5)}
+                </p>
+                <div>
+                  <p
+                    key={
+                      offer.listingId +
+                      offer.offeror +
+                      offer.totalOfferAmount.toString()
+                    }
+                    className="text-sm italic "
+                  >
+                    {ethers.utils.formatEther(offer.totalOfferAmount)}{' '}
+                    {NATIVE_TOKENS[network].symbol}
+                  </p>
+                  {listing.sellerAddress === address && (
+                    <button
+                      type="button"
+                      className="p-2 w-32 bg-red-500/50 rounded-lg font-bold text-xs cursor-pointer"
+                      onClick={() =>
+                        acceptOffer(
+                          {
+                            listingId,
+                            addressOfOfferor: offer.offeror,
+                          },
+                          {
+                            onSuccess() {
+                              notify('Offer accepted successfully', 'success')
+                              router.replace('/')
+                            },
+                            onError() {
+                              notify('Offer could not be accepted', 'error')
+                            },
+                          }
+                        )
+                      }
+                    >
+                      Accept Offer
+                    </button>
+                  )}
+                </div>
+              </>
+            ))}
+          </div>
+        )}
         <div className="grid grid-cols-2 space-y-2 items-center justify-end">
           <hr className="col-span-2" />
           <p className="col-span-2 font-bold">
