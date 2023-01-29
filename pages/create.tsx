@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable no-unused-expressions */
 import React from 'react'
 
 import {
@@ -10,8 +13,11 @@ import {
   useCreateAuctionListing,
   useCreateDirectListing,
 } from '@thirdweb-dev/react'
-import { NFT, NATIVE_TOKENS, NATIVE_TOKEN_ADDRESS } from '@thirdweb-dev/sdk'
+import { NFT, NATIVE_TOKEN_ADDRESS } from '@thirdweb-dev/sdk'
 import { useRouter } from 'next/router'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import notify from '../utils/toast'
 import network from '../utils/network'
 
 function Create() {
@@ -34,17 +40,11 @@ function Create() {
   const networkMismatch = useNetworkMismatch()
   const [, switchNetwork] = useNetwork()
 
-  const {
-    mutate: createDirectListing,
-    isLoading: isLoadingDirect,
-    error: errorDirect,
-  } = useCreateDirectListing(contract)
+  const { mutate: createDirectListing, isLoading: isLoadingDirect } =
+    useCreateDirectListing(contract)
 
-  const {
-    mutate: createAuctionListing,
-    isLoading: isLoadingAuction,
-    error: errorAuction,
-  } = useCreateAuctionListing(contract)
+  const { mutate: createAuctionListing, isLoading: isLoadingAuction } =
+    useCreateAuctionListing(contract)
 
   const handleCreateListing = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -73,12 +73,11 @@ function Create() {
           startTimestamp: new Date(),
         },
         {
-          onSuccess(data, variables, context) {
-            console.log('SUCCESS : ', data, variables, context)
+          onSuccess() {
             router.push('/')
           },
-          onError(error, variables, context) {
-            console.log('ERROR : ', error, variables, context)
+          onError() {
+            notify('Error...', 'error')
           },
         }
       )
@@ -97,12 +96,11 @@ function Create() {
           reservePricePerToken: 0,
         },
         {
-          onSuccess(data, variables, context) {
-            console.log('SUCCESS : ', data, variables, context)
+          onSuccess() {
             router.push('/')
           },
-          onError(error, variables, context) {
-            console.log('ERROR : ', error, variables, context)
+          onError() {
+            notify('Error...', 'error')
           },
         }
       )
@@ -183,6 +181,7 @@ function Create() {
           </div>
         </form>
       )}
+      <ToastContainer />
     </main>
   )
 }
